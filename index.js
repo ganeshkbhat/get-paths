@@ -300,11 +300,11 @@ var posix = {
     for (var i = path.length - 1; i >= 1; --i) {
       code = path.charCodeAt(i);
       if (code === 47 /*/*/) {
-          if (!matchedSlash) {
-            end = i;
-            break;
-          }
-        } else {
+        if (!matchedSlash) {
+          end = i;
+          break;
+        }
+      } else {
         // We saw the first non-path separator
         matchedSlash = false;
       }
@@ -331,13 +331,13 @@ var posix = {
       for (i = path.length - 1; i >= 0; --i) {
         var code = path.charCodeAt(i);
         if (code === 47 /*/*/) {
-            // If we reached a path separator that was not part of a set of path
-            // separators at the end of the string, stop now
-            if (!matchedSlash) {
-              start = i + 1;
-              break;
-            }
-          } else {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now
+          if (!matchedSlash) {
+            start = i + 1;
+            break;
+          }
+        } else {
           if (firstNonSlashEnd === -1) {
             // We saw the first non-path separator, remember this index in case
             // we need it if the extension ends up not matching
@@ -362,18 +362,18 @@ var posix = {
         }
       }
 
-      if (start === end) end = firstNonSlashEnd;else if (end === -1) end = path.length;
+      if (start === end) end = firstNonSlashEnd; else if (end === -1) end = path.length;
       return path.slice(start, end);
     } else {
       for (i = path.length - 1; i >= 0; --i) {
         if (path.charCodeAt(i) === 47 /*/*/) {
-            // If we reached a path separator that was not part of a set of path
-            // separators at the end of the string, stop now
-            if (!matchedSlash) {
-              start = i + 1;
-              break;
-            }
-          } else if (end === -1) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now
+          if (!matchedSlash) {
+            start = i + 1;
+            break;
+          }
+        } else if (end === -1) {
           // We saw the first non-path separator, mark this as the end of our
           // path component
           matchedSlash = false;
@@ -398,14 +398,14 @@ var posix = {
     for (var i = path.length - 1; i >= 0; --i) {
       var code = path.charCodeAt(i);
       if (code === 47 /*/*/) {
-          // If we reached a path separator that was not part of a set of path
-          // separators at the end of the string, stop now
-          if (!matchedSlash) {
-            startPart = i + 1;
-            break;
-          }
-          continue;
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now
+        if (!matchedSlash) {
+          startPart = i + 1;
+          break;
         }
+        continue;
+      }
       if (end === -1) {
         // We saw the first non-path separator, mark this as the end of our
         // extension
@@ -413,11 +413,11 @@ var posix = {
         end = i + 1;
       }
       if (code === 46 /*.*/) {
-          // If this is our first dot, mark it as the start of our extension
-          if (startDot === -1)
-            startDot = i;
-          else if (preDotState !== 1)
-            preDotState = 1;
+        // If this is our first dot, mark it as the start of our extension
+        if (startDot === -1)
+          startDot = i;
+        else if (preDotState !== 1)
+          preDotState = 1;
       } else if (startDot !== -1) {
         // We saw a non-dot and non-path separator before our dot, so we should
         // have a good chance at having a non-empty extension
@@ -426,10 +426,10 @@ var posix = {
     }
 
     if (startDot === -1 || end === -1 ||
-        // We saw a non-dot character immediately before the dot
-        preDotState === 0 ||
-        // The (right-most) trimmed path component is exactly '..'
-        preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+      // We saw a non-dot character immediately before the dot
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly '..'
+      preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
       return '';
     }
     return path.slice(startDot, end);
@@ -470,14 +470,14 @@ var posix = {
     for (; i >= start; --i) {
       code = path.charCodeAt(i);
       if (code === 47 /*/*/) {
-          // If we reached a path separator that was not part of a set of path
-          // separators at the end of the string, stop now
-          if (!matchedSlash) {
-            startPart = i + 1;
-            break;
-          }
-          continue;
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now
+        if (!matchedSlash) {
+          startPart = i + 1;
+          break;
         }
+        continue;
+      }
       if (end === -1) {
         // We saw the first non-path separator, mark this as the end of our
         // extension
@@ -485,9 +485,9 @@ var posix = {
         end = i + 1;
       }
       if (code === 46 /*.*/) {
-          // If this is our first dot, mark it as the start of our extension
-          if (startDot === -1) startDot = i;else if (preDotState !== 1) preDotState = 1;
-        } else if (startDot !== -1) {
+        // If this is our first dot, mark it as the start of our extension
+        if (startDot === -1) startDot = i; else if (preDotState !== 1) preDotState = 1;
+      } else if (startDot !== -1) {
         // We saw a non-dot and non-path separator before our dot, so we should
         // have a good chance at having a non-empty extension
         preDotState = -1;
@@ -495,12 +495,12 @@ var posix = {
     }
 
     if (startDot === -1 || end === -1 ||
-    // We saw a non-dot character immediately before the dot
-    preDotState === 0 ||
-    // The (right-most) trimmed path component is exactly '..'
-    preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+      // We saw a non-dot character immediately before the dot
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly '..'
+      preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
       if (end !== -1) {
-        if (startPart === 0 && isAbsolute) ret.base = ret.name = path.slice(1, end);else ret.base = ret.name = path.slice(startPart, end);
+        if (startPart === 0 && isAbsolute) ret.base = ret.name = path.slice(1, end); else ret.base = ret.name = path.slice(startPart, end);
       }
     } else {
       if (startPart === 0 && isAbsolute) {
@@ -513,7 +513,7 @@ var posix = {
       ret.ext = path.slice(startDot, end);
     }
 
-    if (startPart > 0) ret.dir = path.slice(0, startPart - 1);else if (isAbsolute) ret.dir = '/';
+    if (startPart > 0) ret.dir = path.slice(0, startPart - 1); else if (isAbsolute) ret.dir = '/';
 
     return ret;
   },
@@ -526,4 +526,21 @@ var posix = {
 
 posix.posix = posix;
 
-module.exports = posix;
+
+/**
+ * isBrowser
+ *
+ * @return {*} 
+ */
+function isBrowser() {
+  if (typeof process === "object" && typeof require === "function") {
+    return false;
+  }
+  if (typeof importScripts === "function") { return false; }
+  if (typeof window === "object") { return true; }
+}
+
+if (!isBrowser()) {
+  module.exports = posix;
+}
+
