@@ -26,7 +26,13 @@
     "run": [
       "uglify",
       "gitadd",
-      "testsm",
+      "test"
+    ]
+  },
+  "pre-push": {
+    "run": [
+      "uglify",
+      "gitadd",
       "test"
     ]
   },

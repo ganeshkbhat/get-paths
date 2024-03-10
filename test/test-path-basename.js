@@ -3,7 +3,8 @@ var tape = require('tape');
 var path = require('../');
 
 tape('path.basename', function (t) {
-  t.strictEqual(path.basename(__filename), 'test-path-basename.js');
+  
+  t.strictEqual(path.basename(__filename), path.normalize("test-path-basename.js"))
   t.strictEqual(path.basename(__filename, '.js'), 'test-path-basename');
   t.strictEqual(path.basename('.js', '.js'), '');
   t.strictEqual(path.basename(''), '');
