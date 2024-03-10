@@ -4,8 +4,8 @@ var path = require('../');
 
 tape('path.basename', function (t) {
   
-  t.strictEqual(path.basename(__filename), path.normalize("test-path-basename.js"))
-  t.strictEqual(path.basename(__filename, '.js'), 'test-path-basename');
+  t.strictEqual(path.basename(__filename), path.normalize("test-path-basename.js")); // failing
+  t.strictEqual(path.basename(__filename, '.js'), 'test-path-basename'); // failing
   t.strictEqual(path.basename('.js', '.js'), '');
   t.strictEqual(path.basename(''), '');
   t.strictEqual(path.basename('/dir/basename.ext'), 'basename.ext');
