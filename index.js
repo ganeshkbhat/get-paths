@@ -543,4 +543,3 @@ function isBrowser() {
 if (!isBrowser()) {
   module.exports = posix;
 }
-
